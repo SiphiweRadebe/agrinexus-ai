@@ -1,0 +1,31 @@
+{
+  "facts": [
+    {
+      "text": "Crop rotation improves soil fertility by alternating nutrient demands across seasons",
+      "category": "soil_management",
+      "source": "agricultural_textbook"
+    },
+    {
+      "text": "Irrigation systems require regular maintenance to prevent clogging and salt buildup",
+      "category": "irrigation",
+      "source": "farm_practices"
+    },
+    {
+      "text": "Nitrogen, phosphorus, and potassium (NPK) are the three essential macronutrients for plant growth",
+      "category": "fertilization",
+      "source": "soil_science"
+    },
+    {
+      "text": "Composting organic waste enriches soil with natural nutrients and improves texture",
+      "category": "soil_improvement",
+      "source": "sustainable_farming"
+    },
+    {
+      "text": "Soil pH balance between 6.0 and 7.0 is optimal for most crops",
+      "category": "soil_chemistry",
+      "source": "agricultural_science"
+    }
+  ],
+  "version": "1.0",
+  "last_updated": "2026-06-23"
+}
