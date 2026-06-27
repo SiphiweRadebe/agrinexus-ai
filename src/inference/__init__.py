@@ -1,5 +1,5 @@
 """Inference pipeline"""
 
-from .inference import InferencePipeline
+from .inference import InferencePipeline, InferenceOutput
 
-__all__ = ["InferencePipeline"]
+__all__ = ["InferencePipeline", "InferenceOutput"]

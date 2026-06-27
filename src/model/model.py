@@ -243,22 +243,46 @@ class TransformerModel(nn.Module):
             Generated token IDs
         """
         device = input_ids.device
+        seq_length = input_ids.shape[1]
         
         for _ in range(max_length):
+            # Clamp input_ids to valid range
+            input_ids = torch.clamp(input_ids, 0, self.vocab_size - 1)
+            
             # Get predictions for next token
             logits = self(input_ids)
             next_token_logits = logits[:, -1, :] / temperature
             
+            # Ensure we only keep valid tokens (0 to vocab_size-1)
+            # Set logits for invalid tokens to -inf
+            if next_token_logits.shape[-1] > self.vocab_size:
+                next_token_logits[:, self.vocab_size:] = float('-inf')
+            
             # Top-k filtering
             if top_k is not None:
+                top_k = min(top_k, next_token_logits.shape[-1])
                 indices_to_remove = next_token_logits < torch.topk(next_token_logits, top_k)[0][..., -1, None]
                 next_token_logits[indices_to_remove] = float('-inf')
+            
+            # Replace NaN/Inf with a valid small value
+            next_token_logits = torch.where(
+                torch.isfinite(next_token_logits),
+                next_token_logits,
+                torch.tensor(float('-100.0'), device=device, dtype=next_token_logits.dtype)
+            )
             
             # Sample next token
             next_token_probs = torch.softmax(next_token_logits, dim=-1)
             next_token = torch.multinomial(next_token_probs, num_samples=1)
             
+            # Clamp next_token to valid range
+            next_token = torch.clamp(next_token, 0, self.vocab_size - 1)
+            
             # Append to sequence
             input_ids = torch.cat([input_ids, next_token], dim=1)
+            
+            # Stop if we've reached max length
+            if input_ids.shape[1] >= seq_length + max_length:
+                break
         
         return input_ids

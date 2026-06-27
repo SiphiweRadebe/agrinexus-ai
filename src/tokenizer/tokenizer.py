@@ -84,7 +84,11 @@ class CharTokenizer:
         
         # Encode characters
         for char in text:
+            # Handle special characters and multi-byte characters
             token_id = self.vocab.get(char, self.unk_token_id)
+            # Ensure token_id is within valid range
+            if token_id >= len(self.vocab):
+                token_id = self.unk_token_id
             tokens.append(token_id)
         
         # Add EOS token

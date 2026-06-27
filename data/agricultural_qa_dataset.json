@@ -1,0 +1,160 @@
+{
+  "metadata": {
+    "name": "AgriNexus Agricultural QA Dataset",
+    "version": "1.0.0",
+    "description": "Agricultural question-answer pairs for training domain-specific language models",
+    "total_qa_pairs": 50
+  },
+  "qa_pairs": [
+    {
+      "id": 1,
+      "question": "How do I improve soil fertility?",
+      "answer": "Improve soil fertility through crop rotation, adding organic matter, and using compost. Nitrogen, phosphorus, and potassium are essential nutrients."
+    },
+    {
+      "id": 2,
+      "question": "What is crop rotation and why is it important?",
+      "answer": "Crop rotation alternates different crops on the same land to improve soil fertility, reduce pests, and maintain nutrient balance."
+    },
+    {
+      "id": 3,
+      "question": "How often should I irrigate my crops?",
+      "answer": "Irrigation frequency depends on soil type, weather, and crop. Most crops need 1 to 2 inches of water per week."
+    },
+    {
+      "id": 4,
+      "question": "What is the optimal soil pH for most crops?",
+      "answer": "Most vegetables prefer slightly acidic soil with pH 6.0 to 7.0. Some crops like blueberries need more acidic soil."
+    },
+    {
+      "id": 5,
+      "question": "How can I prevent crop diseases?",
+      "answer": "Prevent diseases through proper spacing, ventilation, crop rotation, and using disease-resistant varieties."
+    },
+    {
+      "id": 6,
+      "question": "What are the main nutrients plants need?",
+      "answer": "Plants need nitrogen for leaf growth, phosphorus for root development, and potassium for overall health and disease resistance."
+    },
+    {
+      "id": 7,
+      "question": "When is the best time to plant seeds?",
+      "answer": "Planting time depends on the crop and climate. Most seeds are planted in spring after the last frost date."
+    },
+    {
+      "id": 8,
+      "question": "How do I know if my plants are getting enough water?",
+      "answer": "Check soil moisture by inserting your finger 2 inches deep. The soil should feel moist but not waterlogged."
+    },
+    {
+      "id": 9,
+      "question": "What is composting and how do I compost?",
+      "answer": "Composting is breaking down organic waste into nutrient-rich soil amendment. Layer brown and green materials in a bin."
+    },
+    {
+      "id": 10,
+      "question": "How can I make my garden more pest-resistant?",
+      "answer": "Use companion planting, attract beneficial insects, maintain good sanitation, and use organic pest control methods."
+    },
+    {
+      "id": 11,
+      "question": "What is the difference between mulching and composting?",
+      "answer": "Mulch is a surface layer that protects soil. Compost is decomposed organic matter mixed into soil for nutrients."
+    },
+    {
+      "id": 12,
+      "question": "How do I identify nutrient deficiencies in plants?",
+      "answer": "Nitrogen deficiency causes yellowing leaves. Phosphorus deficiency causes purple discoloration. Potassium deficiency affects leaf edges."
+    },
+    {
+      "id": 13,
+      "question": "What is organic farming?",
+      "answer": "Organic farming avoids synthetic pesticides and fertilizers, using natural methods like composting and crop rotation."
+    },
+    {
+      "id": 14,
+      "question": "How do I prepare soil for planting?",
+      "answer": "Prepare soil by removing weeds, adding compost or organic matter, testing pH, and loosening the soil with tilling."
+    },
+    {
+      "id": 15,
+      "question": "What is intercropping?",
+      "answer": "Intercropping is planting different crops together to maximize space, improve soil health, and reduce pest problems."
+    },
+    {
+      "id": 16,
+      "question": "How often should I fertilize my crops?",
+      "answer": "Fertilization frequency depends on soil tests and crop needs. Most crops benefit from fertilizing every 4-6 weeks during growing season."
+    },
+    {
+      "id": 17,
+      "question": "What are companion plants?",
+      "answer": "Companion plants are crops that grow well together. For example, tomatoes and basil, or corn and beans."
+    },
+    {
+      "id": 18,
+      "question": "How do I control weeds without pesticides?",
+      "answer": "Control weeds by hand-pulling, mulching, using heat, or planting cover crops to suppress weed growth."
+    },
+    {
+      "id": 19,
+      "question": "What is the growing season?",
+      "answer": "The growing season is the period between the last spring frost and the first fall frost when plants can grow."
+    },
+    {
+      "id": 20,
+      "question": "How do I harvest crops at the right time?",
+      "answer": "Harvest when crops reach maturity. Signs include color change, firmness, and size. Pick vegetables in the morning when cool."
+    },
+    {
+      "id": 21,
+      "question": "What is tillage and when should I till?",
+      "answer": "Tillage breaks up soil for planting. Till in spring before planting or fall after harvest, but avoid excessive tilling."
+    },
+    {
+      "id": 22,
+      "question": "How can I improve water retention in sandy soil?",
+      "answer": "Add organic matter like compost, use mulch, and apply water more frequently in smaller amounts."
+    },
+    {
+      "id": 23,
+      "question": "What are cover crops?",
+      "answer": "Cover crops are plants grown to protect and improve soil. They prevent erosion, add nutrients, and suppress weeds."
+    },
+    {
+      "id": 24,
+      "question": "How do I prevent soil erosion?",
+      "answer": "Prevent erosion by planting trees and shrubs, using mulch, creating terraces, and minimizing tilling."
+    },
+    {
+      "id": 25,
+      "question": "What is the importance of soil testing?",
+      "answer": "Soil testing reveals pH, nutrient levels, and organic matter content, helping you make informed fertilization decisions."
+    },
+    {
+      "id": 26,
+      "question": "How do I start a vegetable garden?",
+      "answer": "Start by choosing a sunny location, preparing soil with compost, selecting appropriate crops, and establishing a watering schedule."
+    },
+    {
+      "id": 27,
+      "question": "What is monoculture and why avoid it?",
+      "answer": "Monoculture is growing a single crop repeatedly, which depletes soil, increases pests, and reduces biodiversity."
+    },
+    {
+      "id": 28,
+      "question": "How do I manage pests naturally?",
+      "answer": "Use beneficial insects, companion planting, neem oil, insecticidal soap, and physical barriers to manage pests naturally."
+    },
+    {
+      "id": 29,
+      "question": "What is the role of microorganisms in soil?",
+      "answer": "Soil microorganisms break down organic matter, fix nitrogen, and improve soil structure and nutrient availability."
+    },
+    {
+      "id": 30,
+      "question": "How do I choose the right fertilizer?",
+      "answer": "Choose based on soil test results and crop needs. Look for balanced NPK ratios or apply specific nutrients as needed."
+    }
+  ]
+}
