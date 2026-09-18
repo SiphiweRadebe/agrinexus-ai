@@ -1,0 +1,50 @@
+name: Daily Contribution
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create a harmless daily timestamp update
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p .github
+          TIMESTAMP_FILE=".github/daily-contribution.txt"
+          DATE_UTC="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          echo "Last contribution: ${DATE_UTC}" > "$TIMESTAMP_FILE"
+
+      - name: Commit and push the daily contribution
+        shell: bash
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_ACTOR_ID: ${{ github.actor_id }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+
+          git add .github/daily-contribution.txt
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: daily contribution update $(date -u +"%Y-%m-%d")"
+          git push origin HEAD:${GITHUB_REF_NAME}
