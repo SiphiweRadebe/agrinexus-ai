@@ -1,50 +1,135 @@
-name: Daily Contribution
+name: Profile Pulse
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: profile-pulse-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  daily-commit:
+  sync-profile:
+    name: Synchronize GitHub Profile
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Create a harmless daily timestamp update
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          mkdir -p .github
-          TIMESTAMP_FILE=".github/daily-contribution.txt"
-          DATE_UTC="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-          echo "Last contribution: ${DATE_UTC}" > "$TIMESTAMP_FILE"
-
-      - name: Commit and push the daily contribution
+      - name: Refresh profile intelligence
         shell: bash
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_ACTOR_ID: ${{ github.actor_id }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
 
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+          from urllib.request import Request, urlopen
 
-          git add .github/daily-contribution.txt
+          username = os.environ["GITHUB_REPOSITORY_OWNER"]
+          token = os.environ["GH_TOKEN"]
+
+          def fetch_api(path):
+              request = Request(
+                  f"https://api.github.com/{path}",
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": f"Bearer {token}",
+                      "User-Agent": "profile-pulse",
+                  },
+              )
+              with urlopen(request, timeout=30) as response:
+                  return json.load(response)
+
+          profile = fetch_api(f"users/{username}")
+
+          total_stars = 0
+          page = 1
+
+          while True:
+              repos = fetch_api(
+                  f"users/{username}/repos"
+                  f"?per_page=100&page={page}&type=owner"
+              )
+
+              total_stars += sum(
+                  repo["stargazers_count"]
+                  for repo in repos
+                  if not repo["fork"]
+              )
+
+              if len(repos) < 100:
+                  break
+
+              page += 1
+
+          snapshot = (
+              "<!-- profile-pulse:start -->\n"
+              "### GitHub Snapshot\n\n"
+              "| Repositories | Followers | Stars Earned |\n"
+              "| :---: | :---: | :---: |\n"
+              f"| {profile['public_repos']} "
+              f"| {profile['followers']} "
+              f"| {total_stars} |\n"
+              "<!-- profile-pulse:end -->"
+          )
+
+          readme = Path("README.md")
+          content = readme.read_text(encoding="utf-8")
+
+          pattern = (
+              r"<!-- profile-pulse:start -->"
+              r".*?"
+              r"<!-- profile-pulse:end -->"
+          )
+
+          if re.search(pattern, content, re.DOTALL):
+              updated = re.sub(
+                  pattern,
+                  lambda _: snapshot,
+                  content,
+                  count=1,
+                  flags=re.DOTALL,
+              )
+          else:
+              updated = (
+                  content.rstrip()
+                  + "\n\n"
+                  + snapshot
+                  + "\n"
+              )
+
+          if updated != content:
+              readme.write_text(updated, encoding="utf-8")
+              print("Profile snapshot updated.")
+          else:
+              print("Profile snapshot already current.")
+          PY
+
+      - name: Commit meaningful changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git add README.md
 
           if git diff --cached --quiet; then
-            echo "No changes to commit."
+            echo "No profile changes detected."
             exit 0
           fi
 
-          git commit -m "chore: daily contribution update $(date -u +"%Y-%m-%d")"
-          git push origin HEAD:${GITHUB_REF_NAME}
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit -m "docs(profile): refresh GitHub snapshot"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
