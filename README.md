@@ -210,3 +210,11 @@ This is an educational implementation of a language model architecture inspired 
 ## 📝 License
 
 MIT License - feel free to fork and learn!
+
+<!-- profile-pulse:start -->
+### GitHub Snapshot
+
+| Repositories | Followers | Stars Earned |
+| :---: | :---: | :---: |
+| 14 | 1 | 8 |
+<!-- profile-pulse:end -->
